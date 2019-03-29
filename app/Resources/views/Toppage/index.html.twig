@@ -2,6 +2,9 @@
 <body>
 <div>
     <h1>クラシックシンフォニー楽団のページへようこそ！</h1>
+    <h2>お知らせ</h2>
+    <p>{{ information }}</p> {# 変数を出力する #}
+    <p><a href="{{ path(" app_concert_index") }}">公演情報はこちら</a></p> {# path()でルート名を指定 #}
 </div>
 </body>
 </html>
