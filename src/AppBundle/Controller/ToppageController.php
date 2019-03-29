@@ -1,0 +1,26 @@
+<?php
+
+namespace AppBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller; //Controllerクラスをuse文で指定
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+class ToppageController extends Controller
+{  
+    //指定のURLがリクエストされる
+    //⇒カーネルが、URLとマッピングされるコントローラを探し、このコントローラにたどり着く（ルーティング）
+    //⇒コントローラ名とアクション名がカーネルに返る
+    //⇒カーネルがこのコントローラ／アクションを呼び出す
+
+    /**
+    * @Route("/") 
+    */
+    public function indexAction()
+    {
+        $information="5月と6月の公演情報を追加しました。"; //新着情報を変数に格納
+        
+        return $this->render('Toppage/index.html.twig',//テンプレートを指定
+            ['information'=>$information] //テンプレートへ変数を渡す
+        ); //$thisの理解が不十分
+    }
+}
