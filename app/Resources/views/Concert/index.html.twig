@@ -1,8 +1,8 @@
-{% extends "layout.html.twig" %}
+{% extends "layout.html.twig" %} {# 親テンプレートを指定 #}
 
-{% block title %}公演情報{{ parent() }}{% endblock %}
+{% block title %}公演情報{{ parent() }}{% endblock %} {# parent()で非共通部分にコードを追加 #}{# 非共通部分：titleブロック #}
 
-{% block body %}
+{% block body %} {# 非共通部分：blockブロック #}
 <section id="home" class="head-main-img">
     <div class="container">
         <div class="row text-center pad-row">
