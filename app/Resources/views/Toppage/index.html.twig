@@ -3,8 +3,9 @@
 <div>
     <h1>クラシックシンフォニー楽団のページへようこそ！</h1>
     <h2>お知らせ</h2>
-    <p>{{ include("Common/information.html.twig") }}</p> {#　お知らせ表示を埋め込む #}
+    <p>{{ include("Common/information.html.twig") }}</p> {#　include()でお知らせ表示を埋め込む #}
     <p><a href="{{ path(" app_concert_index") }}">公演情報はこちら</a></p> {# path()でルート名を指定 #}
+    {{ render(controller("AppBundle:Blog:latestList")) }} {#　render()で新着ブログリストでお知らせ表示を埋め込む #}
 </div>
 </body>
 </html>
