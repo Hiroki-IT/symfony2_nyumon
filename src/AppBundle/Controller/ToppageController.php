@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+//use文で他のファイルのclassにアクセスする
 use Symfony\Bundle\FrameworkBundle\Controller\Controller; //Controllerクラスをuse文で指定
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -19,8 +20,8 @@ class ToppageController extends Controller
     {
         $information="5月と6月の公演情報を追加しました。"; //新着情報を変数に格納
         
-        return $this->render('Toppage/index.html.twig',//テンプレートを指定
+        return $this->render('Toppage/index.html.twig',//同じclass内のメンバ変数を使うために疑似変数を使用。テンプレートを指定
             ['information'=>$information] //テンプレートへ変数を渡す
-        ); //$thisの理解が不十分
+        );
     }
 }

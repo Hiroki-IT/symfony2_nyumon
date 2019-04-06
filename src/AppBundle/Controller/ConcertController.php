@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+//use文で他のファイルのclassにアクセスする
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -50,7 +51,7 @@ class ConcertController extends Controller
             ],
         ];
 
-        return $this->render("Concert/index.html.twig", //index.html.twigをレンダリング
+        return $this->render("Concert/index.html.twig", //同じclass内のメンバ変数を使うために疑似変数を使用。index.html.twigをレンダリング
             ['concertList' => $concertList] //公演情報配列をテンプレートへ渡す
         );
     }
