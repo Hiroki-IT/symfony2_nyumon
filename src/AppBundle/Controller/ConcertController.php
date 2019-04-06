@@ -50,7 +50,7 @@ class ConcertController extends Controller
             ],
         ];
 
-        return $this->render("Concert/index.html.twig",
+        return $this->render("Concert/index.html.twig", //index.html.twigをレンダリング
             ['concertList' => $concertList] //公演情報配列をテンプレートへ渡す
         );
     }
