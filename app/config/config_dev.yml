@@ -9,7 +9,8 @@ framework:
 
 web_profiler:
     toolbar: true
-    intercept_redirects: true #リダイレクトが実行される前に、確認画面が表示されるようにtrueとする
+    intercept_redirects: true
+    #リダイレクトが実行される前に、確認画面が表示されるようにtrueとする
 
 monolog:
     handlers:

@@ -12,19 +12,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/inquiry") //コントローラ全体で基準とするURL
- */
 //指定のURLがリクエストされる
 //⇒カーネルが、URLとマッピングされているコントローラを探し、このコントローラにたどり着く（ルーティング）
 //⇒コントローラ名とアクション名がカーネルに返る
 //⇒カーネルがこのコントローラ／アクションを呼び出す
+
+/**
+ * @Route("/inquiry") //コントローラ全体で基準とするURL
+ */
 class InquiryController extends Controller
 {
-    /**
-    * @Route("/")
-    * @Method("get") //HTTPメソッドをGET送信に限定
-    */
     private function createInquiryForm() //フォームを定義する関数を作成
     {
         return $this->createFormBuilder() //同じclass内のメンバ変数を使うために疑似変数を使用。
@@ -47,6 +44,10 @@ class InquiryController extends Controller
             ->getForm(); //最後に、formオブジェクトにして返す
     }
 
+    /**
+    * @Route("/")
+    * @Method("get") //HTTPメソッドをGET送信に限定
+    */
     public function indexAction()
     {
         return $this->render('Inquiry/index.html.twig',  //同じclass内のメンバ変数を使うために疑似変数を使用。
@@ -72,7 +73,7 @@ class InquiryController extends Controller
        $form->handleRequest($request); //formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
        if($form->isValid()) //フォーム入力値のバリデーションを行う
        {
-           return $this->$request( //同じclass内のメンバ変数を使うために疑似変数を使用。
+           return $this->redirect( //同じclass内のメンバ変数を使うために疑似変数を使用。
                $this->generateUrl('app_inquiry_complete')); //何らかの処理を行った後、完了ページへリダイレクト
          
            return $this->render('Inquiry/index.html.twig', //同じclass内のメンバ変数を使うために疑似変数を使用。
