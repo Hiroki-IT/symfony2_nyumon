@@ -10,7 +10,7 @@ framework:
 web_profiler:
     toolbar: true
     intercept_redirects: true
-    #リダイレクトが実行される前に、確認画面が表示されるようにtrueとする
+    # リダイレクトが実行される前に、確認画面が表示されるようにtrueとする
 
 monolog:
     handlers:
@@ -38,5 +38,5 @@ monolog:
         #    type: chromephp
         #    level: info
 
-#swiftmailer:
-#    delivery_addresses: ['me@example.com']
+swiftmailer:
+    delivery_addresses: ['hasegawafeedshop@gmail.com']
