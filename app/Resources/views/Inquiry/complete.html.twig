@@ -1,0 +1,23 @@
+{% extends "layout.html.twig" %} {# 親テンプレートを指定 #}
+
+{% block title %}お問い合わせ{{ parent() }}{% endblock %} {# parent()で非共通部分にコードを追加 #}{# 非共通部分：titleブロック #}
+
+{% block body %} {# 非共通部分：blockブロック #}
+<section id="home" class="head-main-img"> {# idは一回だけ、classは複数回使える。構造上の見やすさとして、大きなレイアウトをidとすると良い #}
+    <div class="container">
+        <div class="row text-center pad-row">
+            <div class="col-md-10 col-md-offset-1">
+                <h1><span class="back-light">お問い合わせ - 送信完了</span></h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="inquiry-sec">
+    <div class="container">
+        <div class="row pad-row">
+            お問い合わせありがとうございました。
+        </div>
+    </div>
+</section>
+{% endblock %}
