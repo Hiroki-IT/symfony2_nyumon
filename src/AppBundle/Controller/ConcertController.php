@@ -2,28 +2,28 @@
 
 namespace AppBundle\Controller;
 
-//use文で他のファイルのclassにアクセスする
+#use文で他のファイルのclassにアクセスする
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class ConcertController extends Controller
 {
-    //指定のURLがリクエストされる
-    //⇒カーネルが、URLとマッピングされるコントローラを探し、このコントローラにたどり着く（ルーティング）
-    //⇒コントローラ名とアクション名がカーネルに返る
-    //⇒カーネルがこのコントローラ／アクションを呼び出す
+    #指定のURLがリクエストされる
+    #⇒カーネルが、URLとマッピングされるコントローラを探し、このコントローラにたどり着く（ルーティング）
+    #⇒コントローラ名とアクション名がカーネルに返る
+    #⇒カーネルがこのコントローラ／アクションを呼び出す
     
     /**
      * @Route("/concert/")
      */
     public function indexAction()
     {
-        $concertList = [ //連想配列を定義
+        $concertList = [ #連想配列を定義
             [
                 'date' => '2015年5月3日',
                 'time' => '14:00',
                 'place' => '東京文化会館(満席)',
-                'available' => false, //予測可能フラグを立てて、表示を分岐させる
+                'available' => false, #予測可能フラグを立てて、表示を分岐させる
             ],
             [
                 'date' => '2015年7月12日',
@@ -51,8 +51,8 @@ class ConcertController extends Controller
             ],
         ];
 
-        return $this->render("Concert/index.html.twig", //同じclass内のメンバ変数を使うために疑似変数を使用。index.html.twigをレンダリング
-            ['concertList' => $concertList] //公演情報配列をテンプレートへ渡す
+        return $this->render('Concert/index.html.twig', #同じclass内のメンバ変数を使うために疑似変数を使用。index.html.twigをレンダリング
+            ['concertList' => $concertList] #公演情報配列をテンプレートへ渡す
         );
     }
 }

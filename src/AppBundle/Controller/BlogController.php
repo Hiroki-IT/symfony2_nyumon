@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-//use文で他のファイルのclassにアクセスする
+#use文で他のファイルのclassにアクセスする
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -24,7 +24,7 @@ class BlogController extends Controller
                 'title' => '本年もよろしくお願い致します',
             ],
         ];
-        return $this->render('Blog/latestList.html.twig', //同じclass内のメンバ変数を使うために疑似変数を使用。
+        return $this->render('Blog/latestList.html.twig', #同じclass内のメンバ変数を使うために疑似変数を使用。
             ['blogList' => $blogList]
         );
     }
