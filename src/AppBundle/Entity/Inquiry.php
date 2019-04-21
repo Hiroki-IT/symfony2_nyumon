@@ -2,20 +2,20 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM; #Docrtrineのマッピング機能のuse文
 
 /**
  * Inquiry
  *
- * @ORM\Table(name="inquiry")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\InquiryRepository")
+ * @ORM\Table(name="inquiry") #テーブルとクラス間のマッピング。name=""で、テーブル名を設定。
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InquiryRepository") #Entityとセットで使うRepositoryクラスを設定。
  */
-class Inquiry
+class Inquiry 
 {
     /**
-     * @var int
+     * @var int 
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer") #識別子となるプロパティのマッピング
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,7 +24,7 @@ class Inquiry
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=30)
+     * @ORM\Column(name="name", type="string", length=30) #プロパティは、『名前』『データ型』『サイズ』の順に記述
      */
     private $name;
 
