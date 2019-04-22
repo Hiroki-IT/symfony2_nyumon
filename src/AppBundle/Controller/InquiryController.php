@@ -3,9 +3,10 @@
 namespace AppBundle\Controller; #同じ名前の関数は使えないため、namespaceで名前の衝突を防ぐ
 
 #use文で他のファイルのclassにアクセスする
-use Symfony\Bundle\FrameworkBundle\Controller\Controller; 
+use AppBundle\Entity\Inquiry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method; #Methodファイルを使うためのuse文を追加
+use Symfony\Bundle\FrameworkBundle\Controller\Controller; 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType; #TextTypeを使うためのuse文を追加
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -24,8 +25,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
  */
 class InquiryController extends Controller
 {
-
-
     /**
      * @Route("/")
      * @Method("post") #HTTPメソッドをPOST送信に限定
@@ -34,9 +33,20 @@ class InquiryController extends Controller
     {
         $form = $this->createInquiryForm(); #同じclass内のメンバ変数を使うために疑似変数を使用。フォーム定義を取得
         $form->handleRequest($request); #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
-        if($form->isValid()) #もし入力値が正しかった場合、通知メールを送り、完了ページへリダイレクトする。
+        if($form->isValid()) #もし入力値が正しかった場合、データベースへ情報を反映し、通知メールを送り、完了ページへリダイレクトする。
         { 
             $data = $form->getData();
+
+            $inquiry = new Inquiry(); #Inquiryエンティティからインスタンスを作成
+            $inquiry->setName($data['name']);
+            $inquiry->setEmail($data['email']);
+            $inquiry->setTel($data['tel']);
+            $inquiry->setType($data['type']);
+            $inquiry->setContent($data['content']);
+
+            $em = $this->getDoctrine()->getManager(); #Entityマネージャを取得
+            $em->persist($inquiry); #InquiryエンティティのインスタンスをDoctrineの管理下へ
+            $em->flush(); #変更をデータベースへ反映
 
             $message = \Swift_Message::newInstance() #メールメッセージの作成
                 ->setSubject('Webサイトからのお問い合わせ') #メールの件名を設定
