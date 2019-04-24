@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM; #Docrtrineのマッピング機能のuse文
  * Inquiry
  *
  * @ORM\Table(name="inquiry") #テーブルとクラス間のマッピング。name=""で、テーブル名を設定。
- * @ORM\Entity(repositoryClass="AppBundle\Repository\InquiryRepository") #Entityとセットで使うRepositoryクラスを設定。
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InquiryRepository") #Entityクラスに対するRepositoryクラスを設定。
  */
 class Inquiry 
 {
