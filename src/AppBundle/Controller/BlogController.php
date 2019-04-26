@@ -10,20 +10,12 @@ class BlogController extends Controller
 {
     public function latestListAction()
     {
-        $blogList = [
-            [
-                'targetDate' => '2015年3月15日',
-                'title' => '東京公演レポート',
-            ],
-            [
-                'targetDate' => '2015年2月8日',
-                'title' => '最近の練習風景',
-            ],
-            [
-                'targetDate' => '2015年1月3日',
-                'title' => '本年もよろしくお願い致します',
-            ],
-        ];
+        $em = $this->getDoctrine()->getManager(); #Doctrineオブジェクトを取得し、エンティティマネージャを取得
+
+        $blogArticleRepository = $em->getRepository('AppBundle:BlogArticle'); #エンティティクラスとセットで使うリポジトリクラスのインスタンスを取得
+        
+        $blogList = $blogArticleRepository->findBy([], ['targetDate' => 'DESC']); #エンティティリポジトリから、findBy()でtargetDate列を日付降順で配列として取り出す
+
         return $this->render('Blog/latestList.html.twig', #同じclass内のメンバ変数を使うために疑似変数を使用。
             ['blogList' => $blogList]
         );
