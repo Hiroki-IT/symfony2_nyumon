@@ -35,18 +35,6 @@ class InquiryController extends Controller
         $form->handleRequest($request); #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
         if($form->isValid()) #もし入力値が正しかった場合、データベースへ情報を反映し、通知メールを送り、完了ページへリダイレクトする。
         { 
-            /*『return $this->createFormBuilder(new Inquiry())』を追加したのでいらない。
-            
-            $data = $form->getData(); #フォームオブジェクトの入力データ全体を連想配列として取り出し、$dataに格納
-            $inquiry = new Inquiry(); #Inquiryエンティティからインスタンスを作成
-            $inquiry->setName($data['name']); #$inquiryのsetName()で$dataからname値を取り出す
-            $inquiry->setEmail($data['email']);
-            $inquiry->setTel($data['tel']);
-            $inquiry->setType($data['type']);
-            $inquiry->setContent($data['content']);
-            
-            */
-
             $inquiry = $form->getData(); #フォームオブジェクトの入力データ全体を連想配列として取り出し、$inquiryに格納
 
             $em = $this->getDoctrine()->getManager(); #Entityマネージャを取得

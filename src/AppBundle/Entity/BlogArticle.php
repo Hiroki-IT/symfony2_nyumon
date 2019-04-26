@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * BlogArticle
  *
  * @ORM\Table(name="blog_article")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogArticleRepository") #Entityクラスに対するRepositoryクラスを設定。
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogArticleRepository") #EntityファイルのRepository変数="Repositoryパス"で、Entityに対応するRepositoryを設定。
  */
 class BlogArticle
 {
