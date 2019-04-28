@@ -9,12 +9,12 @@ use Symfony\Component\Validator\Constraints As Assert; #Constraintsフォルダ�
  * Inquiry
  *
  * @ORM\Table(name="inquiry") #Tableファイルのクラス内のname変数=""で、テーブル名を設定。
- * @ORM\Entity(repositoryClass="AppBundle\Repository\InquiryRepository") #EntityファイルのRepository変数="Repositoryパス"で、Entityに対応するRepositoryを設定。
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\InquiryRepository") #EntityファイルのRepository変数="Repositoryパス"で、Entityに対応するRepositoryを設定。
  */
 class Inquiry 
 {
     /**
-     * @var int 
+     * @var int
      *
      * @ORM\Column(name="id", type="integer") #Columnファイルのクラス内のname変数にテキスト、type変数に文字型を格納。
      * @ORM\Id
@@ -46,7 +46,7 @@ class Inquiry
      *
      * @ORM\Column(name="tel", type="string", length=20, nullable=true)
      * @Assert\Length(max=20)
-     * @Assert\Regex(pattern="/^[0-9]+$/")
+     * @Assert\Regex(pattern="/^[0-9]+$/") #正規表現によるチェック
      */
     private $tel;
 
