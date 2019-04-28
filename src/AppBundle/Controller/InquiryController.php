@@ -37,7 +37,7 @@ class InquiryController extends Controller
         { 
             $inquiry = $form->getData(); #フォームオブジェクトの入力データ全体を連想配列として取り出し、$inquiryに格納
 
-            $em = $this->getDoctrine()->getManager(); #Entityマネージャを取得
+            $em = $this->getDoctrine()->getManager(); #Doctrineオブジェクトを取得し、エンティティマネージャを取得
             $em->persist($inquiry); #InquiryエンティティのインスタンスをDoctrineの管理下へ
             $em->flush(); #変更をデータベースへ反映
 
