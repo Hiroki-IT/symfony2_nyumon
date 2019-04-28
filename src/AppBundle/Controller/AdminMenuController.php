@@ -12,6 +12,6 @@ class AdminMenuController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('Admin/Common/index.html.twig');
+        return $this->render('Admin/Common/index.html.twig'); #共通部品のサイドメニューバーをrender()で表示
     }
 }
