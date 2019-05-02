@@ -27,14 +27,14 @@ class InquiryController extends Controller
 {
     /**
      * @Route("/")
-     * @Method("post") #HTTPメソッドをPOST送信に限定
+     * @Method("post") #HTTPリクエストのメソッドをPOST送信に限定
      */
-    public function indexPostAction(Request $request)
+    public function indexPostAction(Request $request) #Requestファイルのにおける$requestへアクセス
     {
         $form = $this->createInquiryForm(); #同じclass内のメンバ変数を使うために疑似変数を使用。フォーム定義を取得
         $form->handleRequest($request); #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
-        if($form->isValid()) #もし入力値が正しかった場合、データベースへ情報を反映し、通知メールを送り、完了ページへリダイレクトする。
-        { 
+        if($form->isValid()){ #もし入力値が正しかった場合、データベースへ情報を反映し、通知メールを送り、完了ページへリダイレクトする。
+            
             $inquiry = $form->getData(); #フォームオブジェクトの入力データ全体を連想配列として取り出し、$inquiryに格納
 
             $em = $this->getDoctrine()->getManager(); #Doctrineオブジェクトを取得し、エンティティマネージャを取得
@@ -45,22 +45,18 @@ class InquiryController extends Controller
                 ->setSubject('Webサイトからのお問い合わせ') #メールの件名を設定
                 ->setFrom('webmaster@example.com')
                 ->setTo('admin@example.com')
-                ->setBody(
-                    $this->renderView( #テンプレートから本文を作成
-                        'mail/inquiry.txt.twig',
-                        ['data' => $inquiry] #$dataをキーに、$inquiryをバリューとする。
-                    )
-                );
+                ->setBody($this->renderView('mail/inquiry.txt.twig', ['data' => $inquiry]));
+                #テンプレートから本文を作成
+                #$dataをキーに、$inquiryをバリューとする。
             
             $this->get('mailer')->send($message); #同じclass内のメンバ変数を使うために疑似変数を使用。
 
-            return $this->redirect(
-                $this->generateUrl('app_inquiry_complete')); #何らかの処理を行った後、指定の『ルート名』にリダイレクト（php bin/console debug:routerで確認）
+            return $this->redirect($this->generateUrl('app_inquiry_complete')); #何らかの処理を行った後、指定の『ルート名』にリダイレクト（php bin/console debug:routerで確認）
         } 
         
-        return $this->render('Inquiry/index.html.twig', #同じclass内のメンバ変数を使うために疑似変数を使用。#入力エラーの場合は同じフォームを出力
-            ['form' => $form->createView()] #$formをキーに、createViewの返り値をバリューとする。
-        );
+        return $this->render('Inquiry/index.html.twig', ['form' => $form->createView()]);
+        #同じclass内のメンバ変数を使うために疑似変数を使用。#入力エラーの場合は同じフォームを出力
+        #$formをキーに、createViewの返り値をバリューとする。
     }
 
     /**
@@ -78,32 +74,22 @@ class InquiryController extends Controller
         return $this->createFormBuilder(new Inquiry()) #同じclass内のメンバ変数を使うために疑似変数を使用。#フォームのデータをEntityのインスタンスに格納。
             ->add('name', TextType::class) #add()メソッドを呼び出し、#第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
             ->add('email', EmailType::class) 
-            ->add('tel', TelType::class, [
-                'required' => false,
-            ])
-            ->add('type', ChoiceType::class,[
-                'choices' => [
-                    '公演について' => '公演について', #キーのテキスト名がウェブページに表記される。
-                    'その他' => 'その他',
-                ],
-                'expanded' => true,
-            ])
+            ->add('tel', TelType::class, ['required' => false])
+            ->add('type', ChoiceType::class,['choices' => ['公演について' => '公演について', 'その他' => 'その他'], 'expanded' => true]) #キーのテキスト名がウェブページに表記される。
             ->add('content', TextareaType::class)
-            ->add('submit', SubmitType::class,[ #送信ボタンをフォームの要素として追加
-                'label' => '送信',
-            ])
+            ->add('submit', SubmitType::class,['label' => '送信']) #送信ボタンをフォームの要素として追加
             ->getForm(); #最後に、formオブジェクトにして返す
     }
 
     /**
      * @Route("/")
-     * @Method("get") #HTTPメソッドをGET送信に限定
+     * @Method("get") #HTTPリクエストのメソッドをGET送信に限定
      */
     # このfunctionは、参考書通りだと一番上に配置するのだが、そうすると何故かリダイレクトが実行されなくなってしまう。
     public function indexAction()
     {
-        return $this->render('Inquiry/index.html.twig',  #同じclass内のメンバ変数を使うために疑似変数を使用。
-            ['form' => $this->createInquiryForm()->createView()] 
-        );#シングルアロー（$formオブジェクトのcreateView()メソッドにアクセス）。ダブルアロー（配列のキーとバリューの関係を作る）
+        return $this->render('Inquiry/index.html.twig',  ['form' => $this->createInquiryForm()->createView()]);
+        #同じclass内のメンバ変数を使うために疑似変数を使用。
+        #シングルアロー（$formオブジェクトのcreateView()メソッドにアクセス）。ダブルアロー（配列のキーとバリューの関係を作る）
     }
 }
