@@ -1,24 +1,40 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
+    encoders: #パスワードの文字符号化方式を設定
+        Symfony\Component\Security\Core\User\User: #書籍のパスは間違っているため、エラーが出て苦労した。
+            algorithm: bcrypt #bcrypt暗号化
+            cost: 13 #コスト13というオプション
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
+    providers: #正しいユーザ名とパスワードを設定
+        in_memory: #ユーザー名を直接指定
+            memory:
+                users:
+                    admin:
+                        password: "$2y$13$esvpDS1xLHEOr32Q8m8KRexpXwPjRNQt3cWky3BzSrnxk8pJUZxrq"
+                        roles: ['ROLE_ADMIN']
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+    firewalls: #指定パスへのアクセスの認証方法を設定
+        admin_secured_area:
+            pattern: ^/admin/ #『^/admin/（管理者ページ）』以下へのアクセスの場合、ファイアウォールを無効化。
+            http_basic: #認証方法を選択（今回はベーシック認証）
+                realm: "Secured Admin Area" #認証エリアを定義
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
+    access_control: #指定パスへのアクセス権限を設定
+        - { path: ^/admin/, roles: ROLE_ADMIN } #『^/admin/（管理者ページ）』以下にアクセスできるのは、ROLE_ADMINのみ。
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+    # disables authentication for assets and the profiler, adapt it according to your needs
+    # dev: #テスト環境モード
+        # pattern: ^/(_(profiler|wdt)|css|images|js)/
+        # security: false
 
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+    # main: 
+        # anonymous: ~ #匿名ユーザでアクセス可能
+        # activate different ways to authenticate
+
+        # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+        #http_basic: ~
+
+        # https://symfony.com/doc/current/security/form_login_setup.html
+        #form_login: ~

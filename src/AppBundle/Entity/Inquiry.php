@@ -1,21 +1,22 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity; #データベースからレコードを取り出すと、本ファイルのエンティティのインスタンスとして取り出される
 
-use Doctrine\ORM\Mapping as ORM; #Docrtrineのマッピング機能のuse文
+use Doctrine\ORM\Mapping as ORM; #DocrtrineのMappingフォルダの使用を宣言
+use Symfony\Component\Validator\Constraints As Assert; #Constraintsフォルダの使用を宣言
 
 /**
  * Inquiry
  *
- * @ORM\Table(name="inquiry") #テーブルとクラス間のマッピング。name=""で、テーブル名を設定。
- * @ORM\Entity(repositoryClass="AppBundle\Repository\InquiryRepository") #Entityクラスに対するRepositoryクラスを設定。
+ * @ORM\Table(name="inquiry") #Tableファイルのクラス内のname変数=""で、テーブル名を設定。
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\InquiryRepository") #EntityファイルのRepository変数="Repositoryパス"で、Entityに対応するRepositoryを設定。
  */
 class Inquiry 
 {
     /**
-     * @var int 
+     * @var int
      *
-     * @ORM\Column(name="id", type="integer") #識別子となるプロパティのマッピング
+     * @ORM\Column(name="id", type="integer") #Columnファイルのクラス内のname変数にテキスト、type変数に文字型を格納。
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -25,6 +26,8 @@ class Inquiry
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=30) #プロパティは、『名前』『データ型』『サイズ』の順に記述
+     * @Assert\NotBlank() #空欄を禁止する
+     * @Assert\Length(max=30) #文字数を制限
      */
     private $name;
 
@@ -32,13 +35,18 @@ class Inquiry
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
+     * @Assert\Email() #メールアドレス形式のチェック
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tel", type="string", length=20)
+     * @ORM\Column(name="tel", type="string", length=20, nullable=true)
+     * @Assert\Length(max=20)
+     * @Assert\Regex(pattern="/^[0-9]+$/") #正規表現によるチェック
      */
     private $tel;
 
@@ -46,6 +54,7 @@ class Inquiry
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=20)
+     * @Assert\NotBlank()
      */
     private $type;
 
@@ -53,9 +62,31 @@ class Inquiry
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
      */
     private $content;
 
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="process_status", type="string", length=20)
+     * @Assert\NotBlank(groups={"admin"}) #バリデーショングループadminを指定
+     */
+    private $processStatus;
+
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="process_memo", type="text")
+     * @Assert\NotBlank(groups={"admin"}) #バリデーショングループadminを指定
+     */
+    private $processMemo;
+
+    public function __construct()
+    {
+        $this->processStatus = 0;
+        $this->processMemo = '';
+    }
 
     /**
      * Get id
@@ -186,5 +217,52 @@ class Inquiry
     {
         return $this->content;
     }
-}
 
+    /**
+     * Set processStatus
+     *
+     * @param string $processStatus
+     *
+     * @return Inquiry
+     */
+    public function setProcessStatus($processStatus)
+    {
+        $this->processStatus = $processStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get processStatus
+     *
+     * @return string
+     */
+    public function getProcessStatus()
+    {
+        return $this->processStatus;
+    }
+
+    /**
+     * Set processMemo
+     *
+     * @param string $processMemo
+     *
+     * @return Inquiry
+     */
+    public function setProcessMemo($processMemo)
+    {
+        $this->processMemo = $processMemo;
+
+        return $this;
+    }
+
+    /**
+     * Get processMemo
+     *
+     * @return string
+     */
+    public function getProcessMemo()
+    {
+        return $this->processMemo;
+    }
+}

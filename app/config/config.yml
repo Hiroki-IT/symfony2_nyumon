@@ -10,7 +10,7 @@ parameters:
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ["%locale%"] } #翻訳を有効化
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'

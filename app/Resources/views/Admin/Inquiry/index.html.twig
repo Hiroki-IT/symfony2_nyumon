@@ -1,0 +1,37 @@
+{% extends "Admin/layout.html.twig" %} {# 管理者用画面のレイアウトテンプレートを継承 #}
+
+{% block title %}お問い合わせ管理{% endblock %} {# タイトルブロックの設定 #}
+
+{% block body %}
+<h2 class="sub-header">お問い合わせ管理</h2>
+
+<div>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} {# attribute: 性質、AはBの結果であると考える #}
+検索：{{ form_widget(form.search) }}
+{{ form_widget(form.submit, {"attr": {"class":"btn btn-default"}}) }}
+{{ form_end(form) }}
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr> {# ヘッダーを設定 #}
+            <th>#</th>
+            <th>日時</th>
+            <th>名前</th>
+            <th>種別</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for inquiry in inquiryList %} {# ループでお問い合わせ一覧を表示 #}
+            <tr>
+                <td>{{ inquiry.id }}</td> {# お問い合わせID #}
+                <td></td> {# 日時 #}
+                <td>{{ inquiry.name }}</td> {# お問い合わせ名 #}
+                <td>{% if inquiry.type == '公演について' %}公演について{% else %}その他{% endif %}</td> {# ChoiceTypeに応じて種別表示切替 #}
+                <td><a class="btn btn-default" href={{ path("app_admininquiryedit_input", {"id": inquiry.id}) }}>詳細</a></td> {# 詳細リンクを表示 #}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
