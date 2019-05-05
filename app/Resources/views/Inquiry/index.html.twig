@@ -17,48 +17,48 @@
     <div class="container">
         <div class="row pad-row">
 
-            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} {# フォームの開始タグを出力。クライアントサイドバリデーションの無効化 #}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} {# フォームの開始タグを出力。フォームのバリデーションの無効化 attribute: 性質、AはBの結果であると考える #}
                 
                 <table class="table">
                     <tr>
                         <th><i class="fa fa-circle"></i>お名前</th> {# "fa fa-circle"で、黒丸を表示 #}
                         <td>
-                            {{ form_widget(form.name, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして出力 #}
+                            {{ form_widget(form.name, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして表示 #}
                             {{ form_errors(form.name) }} {# フィールドに入力間違いがあった場合、エラーメッセージを出力 #}
                         </td>
                     </tr>
                     <tr>
                         <th><i class="fa fa-circle"></i>メールアドレス</th> {# "fa fa-circle"で、黒丸を表示 #}
                         <td>
-                            {{ form_widget(form.email, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして出力 #}
+                            {{ form_widget(form.email, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして表示 #}
                             {{ form_errors(form.email) }} {# フィールドに入力間違いがあった場合、エラーメッセージを出力 #}
                         </td>
                     </tr>
                     <tr>
                         <th><i class="fa fa-circle-o"></i>電話番号</th> {# "fa fa-circle"に"o"をつけることで、白塗り丸を表示 #}
                         <td>
-                            {{ form_widget(form.tel, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして出力 #}
+                            {{ form_widget(form.tel, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして表示 #}
                             {{ form_errors(form.tel) }} {# フィールドに入力間違いがあった場合、エラーメッセージを出力 #}
                         </td>
                     </tr>
                     <tr>
                         <th><i class="fa fa-circle"></i>お問い合わせ種別</th> {# "fa fa-circle"で、黒丸を表示 #}
                         <td>
-                            {{ form_widget(form.type, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして出力 #}
+                            {{ form_widget(form.type, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして表示 #}
                             {{ form_errors(form.type) }} {# フィールドに入力間違いがあった場合、エラーメッセージを出力 #}
                         </td>
                     </tr>
                     <tr>
                         <th><i class="fa fa-circle"></i>お問い合わせ内容</th> {# "fa fa-circle"で、黒丸を表示 #}
                         <td>
-                            {{ form_widget(form.content, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして出力 #}
+                            {{ form_widget(form.content, {"attr": {"class":"form-control"}} ) }} {# Inquiry/index.html.twigから$formをレンダリングし、ウィジェットとして表示 #}
                             {{ form_errors(form.content) }} {# フィールドに入力間違いがあった場合、エラーメッセージを出力 #}
                         </td>
                     </tr>
                 </table>
 
                 <div class="text-center">
-                    {{ form_widget(form.submit, {"attr": {"class":"btn btn-primary"}}) }}
+                    {{ form_widget(form.submit, {"attr": {"class":"btn btn-primary"}}) }} {# Bootstrapでは、"class":"btn btn-XXX" Xに応じて、ボタンが用意されている #} 
                 </div>
 
             {{ form_end(form) }}　{# フォームの終了タグを出力 #}
