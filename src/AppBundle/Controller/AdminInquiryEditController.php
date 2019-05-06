@@ -22,9 +22,9 @@ class AdminInquiryEditController extends Controller
      * @ParamConverter("inquiry", class="AppBundle:Inquiry") #URLで指定されたidの値から自動的にエンティティを取得
      * @Method("post") #HTTPリクエストのメソッドをPOST送信に限定
      */
-    public function inputPostAction(Request $request, Inquiry $inquiry) #RequestファイルとInquiryファイルにおける$requestと$inquiryへアクセス
+    public function inputPostAction(Request $request, Inquiry $inquiry) #RequestファイルとInquiryファイルにおける$requestと$inquiryを受け取る
     {
-        $form = $this->createInquiryForm($inquiry); #同じclass内のメンバ変数を使うために疑似変数を使用。フォーム定義を取得
+        $form = $this->createInquiryForm($inquiry); #createInquiryForm()の返り値を$formに格納
         $form->handleRequest($request); #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
         if($form->isValid()){ #もし入力値が正しかった場合、データベースへ情報を反映し、通知メールを送り、完了ページへリダイレクトする。
 
@@ -42,7 +42,7 @@ class AdminInquiryEditController extends Controller
     {
         return $this->createFormBuilder($inquiry, ["validation_groups" => ["admin"]])
         ->add('processStatus', ChoiceType::class, ['choices' => ['未対応' => '未対応', '対応中' => '対応中', '対応済' => '対応済'], 'empty_data' => 0, 'expanded' => true])
-        ->add('processMemo', TextareaType::class)
+        ->add('processMemo', TextareaType::class) #add()でフィールドを追加。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
         ->add('submit', SubmitType::class, ['label' => '保存'])
         ->getForm(); #最後に、formオブジェクトにして返す
     }
@@ -54,7 +54,7 @@ class AdminInquiryEditController extends Controller
      */
     public function inputAction(Inquiry $inquiry)
     {
-        $form = $this->createInquiryForm($inquiry);
+        $form = $this->createInquiryForm($inquiry); #createInquiryForm()の返り値を$formに格納
 
         return $this->render('Admin/Inquiry/edit.html.twig', ['form' => $form->createView(), 'inquiry' => $inquiry]);
     }

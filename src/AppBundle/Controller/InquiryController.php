@@ -29,9 +29,9 @@ class InquiryController extends Controller
      * @Route("/")
      * @Method("post") #HTTPリクエストのメソッドをPOST送信に限定
      */
-    public function indexPostAction(Request $request) #Requestファイルのにおける$requestへアクセス
+    public function indexPostAction(Request $request) #Requestファイルにおける$requestを受け取る
     {
-        $form = $this->createInquiryForm(); #同じclass内のメンバ変数を使うために疑似変数を使用。フォーム定義を取得
+        $form = $this->createInquiryForm(); #createInquiryForm()の返り値を$formに格納
         $form->handleRequest($request); #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
         if($form->isValid()){ #もし入力値が正しかった場合、データベースへ情報を反映し、通知メールを送り、完了ページへリダイレクトする。
             
@@ -72,7 +72,7 @@ class InquiryController extends Controller
     private function createInquiryForm() #フォームを定義する関数を作成
     {
         return $this->createFormBuilder(new Inquiry()) #同じclass内のメンバ変数を使うために疑似変数を使用。#フォームのデータをEntityのインスタンスに格納。
-            ->add('name', TextType::class) #add()メソッドを呼び出し、#第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
+            ->add('name', TextType::class) #add()でフィールドを追加。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
             ->add('email', EmailType::class) 
             ->add('tel', TelType::class, ['required' => false])
             ->add('type', ChoiceType::class,['choices' => ['公演について' => '公演について', 'その他' => 'その他'], 'expanded' => true]) #キーのテキスト名がウェブページに表記される。

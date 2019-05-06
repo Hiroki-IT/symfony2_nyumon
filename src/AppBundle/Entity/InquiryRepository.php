@@ -15,7 +15,7 @@ class InquiryRepository extends EntityRepository #リポジトリクラスに検
 {
     public function findAllByKeyword($keyword) #キーワードに一致するお問い合わせ一覧を取得するfindAllByKeyword()を定義
     {
-        $query = $this->createQueryBuilder('i')
+        $query = $this->createQueryBuilder('i') #createQueryBuilder()の返り値を$formに格納
             ->where('i.name LIKE :keyword') #LIKE検索
             ->orWhere('i.tel LIKE :keyword')
             ->orWhere('i.email LIKE :keyword')
