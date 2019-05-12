@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller; #本ファイルのパスを名前として定義
 
 #use文で他のファイルのclassにアクセスする
 use Symfony\Bundle\FrameworkBundle\Controller\Controller; #Controllerクラスをuse文で指定
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class ToppageController extends Controller
+class ToppageController extends Controller #Symfony/.../Controllerのメンバや処理内容を継承
 {  
     #指定のURLがリクエストされる
     #⇒カーネルが、URLとマッピングされるコントローラを探し、このコントローラにたどり着く（ルーティング）

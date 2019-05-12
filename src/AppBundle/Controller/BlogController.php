@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller; #本ファイルのパスを名前として定義
 
 #use文で他のファイルのclassにアクセスする
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class BlogController extends Controller
+class BlogController extends Controller #Symfony/.../Controllerのメンバや処理内容を継承
 {
     public function latestListAction()
     {

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class BlogArticle
 {
     /**
-     * @var int
+     * @var int #変数の型を定義
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,7 +22,7 @@ class BlogArticle
     private $id;
 
     /**
-     * @var string
+     * @var string #変数の型を宣言
      *
      * @ORM\Column(name="title", type="string", length=100)
      */
@@ -36,7 +36,7 @@ class BlogArticle
     private $targetDate;
 
     /**
-     * @var string
+     * @var string #変数の型を宣言
      *
      * @ORM\Column(name="content", type="text")
      */
@@ -46,7 +46,7 @@ class BlogArticle
     /**
      * Get id
      *
-     * @return int
+     * @return int #返り値の型を宣言
      */
     public function getId()
     {

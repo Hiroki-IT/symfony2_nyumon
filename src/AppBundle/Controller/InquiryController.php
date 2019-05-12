@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller; #同じ名前の関数は使えないため、namespaceで名前の衝突を防ぐ
+namespace AppBundle\Controller; #本ファイルのパスを名前として定義
 
 #use文で他のファイルのclassにアクセスする
 use AppBundle\Entity\Inquiry;
@@ -8,12 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method; #Methodファイルを使うためのuse文を追加
 use Symfony\Bundle\FrameworkBundle\Controller\Controller; 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType; #TextTypeを使うためのuse文を追加
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TelType; 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType; #TextTypeを使うためのuse文を追加
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 #指定のURLがリクエストされる
 #⇒カーネルが、URLとマッピングされているコントローラを探し、このコントローラにたどり着く（ルーティング）
@@ -23,13 +24,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 /**
  * @Route("/inquiry") #コントローラ全体で基準とするURL
  */
-class InquiryController extends Controller
+class InquiryController extends Controller #Symfony/.../Controllerのメンバや処理内容を継承
 {
     /**
      * @Route("/")
      * @Method("post") #HTTPリクエストのメソッドをPOST送信に限定
      */
-    public function indexPostAction(Request $request) #Requestファイルにおける$requestを受け取る
+    public function indexPostAction(Request $request) #引数の型（Requestクラス）宣言を行い、$requestを受け取る
     {
         $form = $this->createInquiryForm(); #createInquiryForm()の返り値を$formに格納
         $form->handleRequest($request); #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む

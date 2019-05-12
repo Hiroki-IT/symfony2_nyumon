@@ -1,28 +1,28 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller; #本ファイルのパスを名前として定義
 
 use AppBundle\Entity\Inquiry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType; #TextTypeを使うためのuse文を追加
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/admin/inquiry")
  */
-class AdminInquiryEditController extends Controller
+class AdminInquiryEditController extends Controller #Symfony/.../Controllerのメンバや処理内容を継承
 {
     /**
      * @Route("/{id}/edit")
      * @ParamConverter("inquiry", class="AppBundle:Inquiry") #URLで指定されたidの値から自動的にエンティティを取得
      * @Method("post") #HTTPリクエストのメソッドをPOST送信に限定
      */
-    public function inputPostAction(Request $request, Inquiry $inquiry) #RequestファイルとInquiryファイルにおける$requestと$inquiryを受け取る
+    public function inputPostAction(Request $request, Inquiry $inquiry) #引数の型（RequestクラスとInquiryクラス）宣言を行い、$requestと$inquiryを受け取る
     {
         $form = $this->createInquiryForm($inquiry); #createInquiryForm()の返り値を$formに格納
         $form->handleRequest($request); #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
