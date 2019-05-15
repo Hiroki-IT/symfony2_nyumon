@@ -56,7 +56,7 @@ class InquiryController extends Controller #Symfony/.../Controllerのメンバ�
         
         return $this->render('Inquiry/index.html.twig', ['form' => $form->createView()]);
         #同じclass内のメンバ変数を使うために疑似変数を使用。#入力エラーの場合は同じフォームを出力
-        #$formをキーに、createViewの返り値をバリューとする。
+        #createView()で、$formのクラスをインスタンス化
     }
 
     /**

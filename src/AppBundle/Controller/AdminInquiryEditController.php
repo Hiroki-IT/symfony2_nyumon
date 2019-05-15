@@ -34,7 +34,7 @@ class AdminInquiryEditController extends Controller #Symfony/.../Controllerの�
         }
         return $this->render('Admin/Inquiry/edit.html.twig', ['form' => $form->createView(), 'inquiry' => $inquiry]);
         #同じclass内のメンバ変数を使うために疑似変数を使用。#入力エラーの場合は同じフォームを出力
-        #$formをキーに、createViewの返り値をバリューとする。
+        #createView()で、$formのクラスをインスタンス化
     }
     
     private function createInquiryForm($inquiry)
