@@ -27,8 +27,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class InquiryController extends Controller #Symfony/.../Controllerのメンバや処理内容を継承
 {
     /**
-     * @Route("/")
-     * @Method("post") #HTTPリクエストのメソッドをPOST送信に限定
+     * @Route("/", methods={"POST"}) #HTTPリクエストのメソッドをPOST送信に限定。参考書の書き方間違っている。
      */
     public function indexPostAction(Request $request) #引数の型（Requestクラス）宣言を行い、$requestを受け取る
     {
@@ -83,8 +82,7 @@ class InquiryController extends Controller #Symfony/.../Controllerのメンバ�
     }
 
     /**
-     * @Route("/")
-     * @Method("get") #HTTPリクエストのメソッドをGET送信に限定
+     * @Route("/", methods={"GET"}) #HTTPリクエストのメソッドをGET送信に限定。参考書の書き方間違っている。
      */
     # このfunctionは、参考書通りだと一番上に配置するのだが、そうすると何故かリダイレクトが実行されなくなってしまう。
     public function indexAction()

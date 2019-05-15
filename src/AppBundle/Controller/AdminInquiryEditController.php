@@ -18,9 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminInquiryEditController extends Controller #Symfony/.../Controllerのメンバや処理内容を継承
 {
     /**
-     * @Route("/{id}/edit")
+     * @Route("/{id}/edit", methods={"POST"}) #HTTPリクエストのメソッドをPOST送信に限定。参考書の書き方間違っている。
      * @ParamConverter("inquiry", class="AppBundle:Inquiry") #URLで指定されたidの値から自動的にエンティティを取得
-     * @Method("post") #HTTPリクエストのメソッドをPOST送信に限定
      */
     public function inputPostAction(Request $request, Inquiry $inquiry) #引数の型（RequestクラスとInquiryクラス）宣言を行い、$requestと$inquiryを受け取る
     {
@@ -48,9 +47,8 @@ class AdminInquiryEditController extends Controller #Symfony/.../Controllerの�
     }
 
     /**
-     * @Route("/{id}/edit")
+     * @Route("/{id}/edit", methods={"GET"}) #HTTPリクエストのメソッドをGET送信に限定。参考書の書き方間違っている。
      * @ParamConverter("inquiry", class="AppBundle:Inquiry") #URLで指定されたidの値から自動的にエンティティを取得
-     * @Method("get") #HTTPリクエストのメソッドをGET送信に限定
      */
     public function inputAction(Inquiry $inquiry)
     {
