@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\Inquiry;
 
-class LoadInquiryData implements FixtureInterface, ContainerAwareInterface
+class LoadInquiryData implements FixtureInterface, ContainerAwareInterface #implementsで、クラスにインターフェイスを実装
 {
     /**
      * @var ContainerInterface

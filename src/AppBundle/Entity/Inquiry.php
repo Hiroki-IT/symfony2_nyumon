@@ -20,7 +20,7 @@ class Inquiry
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $id; # エンティティのID列を$idとする。
 
     /**
      * @var string
@@ -95,7 +95,7 @@ class Inquiry
      */
     public function getId()
     {
-        return $this->id;
+        return $this->id; #プロパティの$idを返す
     }
 
     /**

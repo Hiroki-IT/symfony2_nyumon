@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %} {# 親テンプレートを指定 #}
 
-{% block title %}公演情報{{ parent() }}{% endblock %} {# parent()で非共通部分にコードを追加。非共通部分：titleブロック #}
+{% block title %}公演情報{{ parent() }}{% endblock %} {# parent()で非共通部分にコードを追加。タブのページ名部分  #}
 
 {% block body %} {# 非共通部分：blockブロック #}
 <section id="home" class="head-main-img">　{# idは一回だけ、classは複数回使える。構造上の見やすさとして、大きなレイアウトをidとすると良い #}
