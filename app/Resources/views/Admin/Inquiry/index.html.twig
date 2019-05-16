@@ -4,12 +4,12 @@
 
 {% block body %}
 <h2 class="sub-header">お問い合わせ管理</h2>
-
 <div>
-{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} {# attribute: 性質、AはBの結果であると考える #}
-検索：{{ form_widget(form.search) }}
-{{ form_widget(form.submit, {"attr": {"class":"btn btn-default"}}) }}
-{{ form_end(form) }}
+    {{ form_start(form, {'attr': {'id':'searchForm', 'novalidate': 'novalidate'}}) }} {# attribute: 性質、AはBの結果であると考える #}
+    検索：{{ form_widget(form.search) }}
+    {{ form_widget(form.submit, {"attr": {"class":"btn btn-default searchButton"}}) }} {# 検索ボタンを追加。jQueryで発火時の動きが処理される。#}
+    {{ form_end(form) }}
+    <a class="btn btn-default downloadButton">CSVダウンロード</a> {# CSVダウンロードボタンを追加。jQueryで発火時の動きが処理される。 #}
 </div>
 
 <table class="table table-striped">
@@ -34,4 +34,19 @@
         {% endfor %}
     </tbody>
 </table>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }} {# 親テンプレートを継承しつつ、以下のコードをjavascript領域に追加 #}
+    <script type="text/javascript">
+    //$('〇〇')は、jQuery()と同じ。ドットは、メソッドチェーンを表す（呼び出したメソッドの戻り値がオブジェクトで、そこからさらに呼び出すときの省略記法）。
+        $('.downloadButton').click(function(){ //downloadButton要素をclickした後に、引数内の処理を実行
+            $('#searchForm').attr('action', '{{ path("app_admininquirylist_index", {"_format":"csv"}) }}');//#searchForm要素に、"action"というpathを追加。
+            $('#searchForm').submit(); //downloadButton要素をclickした後に、引数内の処理を実行
+        });
+        $('.searchButton').click(function(){
+            $('#searchForm').attr('action', '{{ path("app_admininquirylist_index", {"_format":"html"}) }}');
+            $('#searchForm').submit();
+        });
+    </script>
 {% endblock %}
