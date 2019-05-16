@@ -47,6 +47,6 @@
         $('.searchButton').click(function(){
             $('#searchForm').attr('action', '{{ path("app_admininquirylist_index", {"_format":"html"}) }}');
             $('#searchForm').submit();
-        });
-    </script>
+        }); //※CSVダウンロードが起こらない
+    </script> 
 {% endblock %}

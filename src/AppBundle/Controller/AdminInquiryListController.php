@@ -60,14 +60,14 @@ class AdminInquiryListController extends Controller #Symfony/.../Controllerの�
     private function createCsv($inquiryList) #csvオブジェクトを作成する
     {
         /**
-         * @var Writer $writer #$writer #引数の型（Writerクラス）宣言を行い、$writerを受け取る
+         * @var Writer $writer #引数の型（Writerクラス）宣言を行い、$writerを受け取る
          */
         $writer = Writer::createFromString(","); #スコープ定義演算子（クラスのプロパティやメソッドにアクセスするためには一度newインスタンスすることが必要だが、それを省略できる）
         $writer->setNewline("\r\n");
 
         foreach($inquiryList as $inquiry){
             /**
-             * @var Inquiry #$inquiry #引数の型（Inquiryクラス）宣言を行い、$inquiryを受け取る
+             * @var Inquiry $inquiry #引数の型（Inquiryクラス）宣言を行い、$inquiryを受け取る
              */
             $writer->insertOne([ $inquiry->getId(), $inquiry->getName(), $inquiry->getEmail()]); #getId()：$inquiry内の$idプロパティ（＝idエンティティ）を返す。
         }
