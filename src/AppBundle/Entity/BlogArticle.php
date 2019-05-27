@@ -4,6 +4,9 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+#Doctrineによるマッピングは、本来『@Table()』である。
+#しかし、SymfonyによるValidationのアノテーション（@NotBlank()）と区別するために、『as』で名前を付けている。
+
 /**
  * BlogArticle
  *

@@ -19,7 +19,7 @@ class AdminInquiryEditController extends Controller #Symfony/.../Controllerの�
 {
     /**
      * @Route("/{id}/edit", methods={"POST"}) #HTTPリクエストのメソッドをPOST送信に限定。参考書の書き方間違っている。
-     * @ParamConverter("inquiry", class="AppBundle:Inquiry") #URLで指定されたidの値から自動的にエンティティを取得
+     * @ParamConverter("inquiry", class="AppBundle:Inquiry") #引数でエンティティを指定
      */
     public function inputPostAction(Request $request, Inquiry $inquiry) #引数の型（RequestクラスとInquiryクラス）宣言を行い、$requestと$inquiryを受け取る
     {
@@ -41,14 +41,14 @@ class AdminInquiryEditController extends Controller #Symfony/.../Controllerの�
     {
         return $this->createFormBuilder($inquiry, ["validation_groups" => ["admin"]])
         ->add('processStatus', ChoiceType::class, ['choices' => ['未対応' => '未対応', '対応中' => '対応中', '対応済' => '対応済'], 'empty_data' => 0, 'expanded' => true])
-        ->add('processMemo', TextareaType::class) #add()でフィールドを追加。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
+        ->add('processMemo', TextareaType::class) #add()でフィールドを設定。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
         ->add('submit', SubmitType::class, ['label' => '保存'])
         ->getForm(); #最後に、formオブジェクトにして返す
     }
 
     /**
      * @Route("/{id}/edit", methods={"GET"}) #HTTPリクエストのメソッドをGET送信に限定。参考書の書き方間違っている。
-     * @ParamConverter("inquiry", class="AppBundle:Inquiry") #URLで指定されたidの値から自動的にエンティティを取得
+     * @ParamConverter("inquiry", class="AppBundle:Inquiry") #引数でエンティティを指定
      */
     public function inputAction(Inquiry $inquiry)
     {

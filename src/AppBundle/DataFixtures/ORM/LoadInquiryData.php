@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\Inquiry;
 
-class LoadInquiryData implements FixtureInterface, ContainerAwareInterface #implementsで、クラスにインターフェイスを実装
+class LoadInquiryData implements FixtureInterface, ContainerAwareInterface #implementsで、クラス修飾子としてインターフェイスを設定
 {
     /**
      * @var ContainerInterface
@@ -28,7 +28,7 @@ class LoadInquiryData implements FixtureInterface, ContainerAwareInterface #impl
     public function load(ObjectManager $manager) 
     {
         $inquiry1 = new Inquiry(); #エンティティを作成
-        $inquiry1->setName('フランツ・クサーヴァー・モーツァルト');
+        $inquiry1->setName('フランツ・クサーヴァー・モーツァルト'); //エンティティに引数をname変数として渡す
         $inquiry1->setEmail('mozart@example.com');
         $inquiry1->setTel('000-1111-2222');
         $inquiry1->setType(0);

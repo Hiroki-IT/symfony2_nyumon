@@ -5,6 +5,9 @@ namespace AppBundle\Entity; #データベースからレコードを取り出す
 use Doctrine\ORM\Mapping as ORM; #DocrtrineのMappingフォルダの使用を宣言
 use Symfony\Component\Validator\Constraints As Assert; #Constraintsフォルダの使用を宣言
 
+#Doctrineによるマッピングは、本来『@Table()』である。
+#しかし、SymfonyによるValidationのアノテーション（@NotBlank()）と区別するために、『as』で名前を付けている。
+
 /**
  * Inquiry
  *
@@ -105,7 +108,7 @@ class Inquiry
      *
      * @return Inquiry
      */
-    public function setName($name)
+    public function setName($name) #引数をname変数としてエンティティに渡す
     {
         $this->name = $name;
 

@@ -15,7 +15,8 @@ if (PHP_VERSION_ID < 70000) {
 
 // When using the HttpCache, you need to call the method in your front controller instead of relying on the configuration parameter
 //Request::enableHttpMethodParameterOverride();
-$request = Request::createFromGlobals();
+
+$request = Request::createFromGlobals(); //createFromGlobals()：『$_SERVER』へのサーバー情報の格納が起きる。
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);

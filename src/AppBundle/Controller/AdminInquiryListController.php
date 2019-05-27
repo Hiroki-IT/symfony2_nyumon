@@ -33,7 +33,7 @@ class AdminInquiryListController extends Controller #Symfony/.../Controllerの�
         }
 
         $em = $this->getDoctrine()->getManager(); #getManagerにアクセスして発動。Doctrineオブジェクトを取得し、エンティティマネージャを取得
-        $inquiryRepository = $em->getRepository('AppBundle:Inquiry'); #エンティティクラスとセットで使うリポジトリクラスのインスタンスを取得
+        $inquiryRepository = $em->getRepository('AppBundle:Inquiry'); #引数でエンティティを指定
 
         $inquiryList = $inquiryRepository->findAllByKeyword($keyword); #findAllByKeyword()でキーワードに一致するお問い合わせ一覧を取得し、$inquiryListに格納
 
@@ -52,7 +52,7 @@ class AdminInquiryListController extends Controller #Symfony/.../Controllerの�
     private function createSearchForm() #キーワード検索フォームを作成する
     { #createXXX()：指定のものを作成する関数
         return $this->createFormBuilder()
-            ->add('search', SearchType::class) #add()でフィールドを追加。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
+            ->add('search', SearchType::class) #add()でフィールドを設定。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
             ->add('submit', ButtonType::class, ['label' => '検索'])
             ->getForm(); 
     }

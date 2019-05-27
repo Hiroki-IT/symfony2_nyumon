@@ -23,5 +23,5 @@ if ($debug) {
 }
 
 $kernel = new AppKernel($env, $debug);
-$application = new Application($kernel);
+$application = new Application($kernel);  //HTTPレスポンスのポート番号などを取り出す
 $application->run($input);
