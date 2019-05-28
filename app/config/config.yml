@@ -30,11 +30,16 @@ framework:
     assets: ~
     php_errors:
         log: true
+    templating: #足りないファイルを設定（引用：https://stackoverflow.com/questions/47656816/you-have-requested-a-non-existent-service-templating）
+        engines: ['twig'] 
+
 
 # Twig Configuration
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals: #グローバル変数として設定
+        url_base: '%url_base%' #path関数などでルート名からURLを生成する場合、ホスト名をパラメータとして固定する必要がある
 
 # Doctrine Configuration
 doctrine:

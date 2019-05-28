@@ -16,3 +16,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # path関数などでルート名からURLを生成する場合、ホスト名をパラメータとして固定する必要がある
+    url_base: http://127.0.0.1:8000

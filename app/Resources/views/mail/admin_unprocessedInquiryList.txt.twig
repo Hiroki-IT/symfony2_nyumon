@@ -1,0 +1,15 @@
+{# コマンドから通知するメールのテンプレート  #}
+
+未処理お問い合わせの一覧 ({{ ""|date("Y-m-d H:i") }}時点) {# dataフィルタで送信日時を追加 #}
+
+{% for inquiry in inquiryList %}
+
+-------------------------------------------------------------------- 
+
+・ID： {{ inquiry.id }} {{inquiry.name}} 様
+・URL： {{ url_base }} {{ path("app_admininquiryedit_input", {"id":inquiry.id }) }}
+{# path関数などでルート名からURLを生成する場合、ホスト名をパラメータとして固定する必要がある #}
+・種別： {{ inquiry.type }}
+・内容： {{ inquiry.content }}
+
+{% endfor %}
