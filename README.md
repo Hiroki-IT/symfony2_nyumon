@@ -7,4 +7,4 @@
 - 掌田津耶乃 (2019). PHPフレームワークSymfony4入門, 秀和システム.
 
 ## 資料
-GitHubのWiki（https://github.com/Hiroki-IT/Symfony2_Nyumon/wiki）
+GitHubのWiki，https://github.com/Hiroki-IT/Symfony2_Nyumon/wiki
