@@ -3,16 +3,26 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JSON; //シリアライズ：オブジェクトをJSONやXMLなどのファイル化可能なフォーマットに変換すること
 
 /**
  * Concert
  *
+ * #concertテーブルとマッピング
  * @ORM\Table(name="concert")
+ *
+ * #対応するRepositoryを指定
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ConcertRepository")
+ *
+ * #明示的に公開するように設定したプロパティ以外はシリアライズしない
+ * @JSON\ExclusionPolicy("all")
  */
 class Concert
 {
     /**
+     *
+     * #JSON形式に変換させない
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -25,6 +35,12 @@ class Concert
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     *
+     * #Expose()でJSON形式に変換することを宣言
+     * @JSON\Expose()
+     *
+     * #JSONに出力するときのフォーマット
+     * @JSON\Type("DateTime<'Y-m-d'>")
      */
     private $date;
 
@@ -32,6 +48,8 @@ class Concert
      * @var \DateTime
      *
      * @ORM\Column(name="time", type="time")
+     * @JSON\Expose()
+     * @JSON\Type("DateTime<'H:i'>")
      */
     private $time;
 
@@ -39,6 +57,8 @@ class Concert
      * @var string
      *
      * @ORM\Column(name="place", type="string", length=100)
+     * @JSON\Expose()
+     * @JSON\Type("string")
      */
     private $place;
 
@@ -46,6 +66,8 @@ class Concert
      * @var bool
      *
      * @ORM\Column(name="available", type="boolean")
+     * @JSON\Expose()
+     * @JSON\Type("boolean")
      */
     private $available;
 
