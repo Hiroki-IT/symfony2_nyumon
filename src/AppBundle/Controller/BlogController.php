@@ -1,20 +1,28 @@
 <?php
 
-namespace AppBundle\Controller; #本ファイルのパスを名前として定義
+#本ファイルのパスを名前として定義
+namespace AppBundle\Controller;
 
 #use文で他のファイルのclassにアクセスする
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class BlogController extends Controller #Symfony/.../Controllerのメンバや処理内容を継承
+#Symfony/.../Controllerのメンバや処理内容を継承
+class BlogController extends Controller
 {
     public function latestListAction()
     {
-        $em = $this->getDoctrine()->getManager(); #Doctrineオブジェクトを取得し、エンティティマネージャを取得
-        $blogArticleRepository = $em->getRepository('AppBundle:BlogArticle'); #引数でエンティティを指定
-        $blogList = $blogArticleRepository->findBy([], ['targetDate' => 'DESC']); #エンティティリポジトリから、findBy()でtargetDate列を日付降順で配列として取り出す
+        #Doctrineオブジェクトを取得し、エンティティマネージャを取得
+        $em = $this->getDoctrine()->getManager();
 
-        return $this->render('Blog/latestList.html.twig', #同じclass内のメンバ変数を使うために疑似変数を使用。
+        #引数でエンティティを指定
+        $blogArticleRepository = $em->getRepository('AppBundle:BlogArticle');
+
+        #エンティティリポジトリから、findBy()でtargetDate列を日付降順で配列として取り出す
+        $blogList = $blogArticleRepository->findBy([], ['targetDate' => 'DESC']);
+
+        #同じclass内のメンバ変数を使うために疑似変数を使用。
+        return $this->render('Blog/latestList.html.twig',
             ['blogList' => $blogList]
         );
     }

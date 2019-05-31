@@ -10,13 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BlogArticle
  *
+ * #blog_articleテーブルとマッピング
  * @ORM\Table(name="blog_article")
+ *
+ * #対応するRepositoryを指定
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogArticleRepository") #EntityファイルのRepository変数="Repositoryパス"で、Entityに対応するRepositoryを設定。
  */
 class BlogArticle
 {
     /**
-     * @var int #変数の型を定義
+     * #変数の型を定義
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -25,7 +29,8 @@ class BlogArticle
     private $id;
 
     /**
-     * @var string #変数の型を宣言
+     * #変数の型を宣言
+     * @var string
      *
      * @ORM\Column(name="title", type="string", length=100)
      */
@@ -39,7 +44,8 @@ class BlogArticle
     private $targetDate;
 
     /**
-     * @var string #変数の型を宣言
+     * #変数の型を宣言
+     * @var string
      *
      * @ORM\Column(name="content", type="text")
      */
@@ -49,7 +55,8 @@ class BlogArticle
     /**
      * Get id
      *
-     * @return int #返り値の型を宣言
+     * #返り値の型を宣言
+     * @return int
      */
     public function getId()
     {

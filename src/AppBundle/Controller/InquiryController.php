@@ -1,6 +1,7 @@
 <?php
 
-namespace AppBundle\Controller; #本ファイルのパスを名前として定義
+#本ファイルのパスを名前として定義
+namespace AppBundle\Controller;
 
 #use文で他のファイルのclassにアクセスする
 use AppBundle\Entity\Inquiry;
@@ -24,39 +25,59 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 /**
  * @Route("/inquiry") #コントローラ全体で基準とするURL
  */
-class InquiryController extends Controller #Symfony/.../Controllerのメンバや処理内容を継承
+#Symfony/.../Controllerのメンバや処理内容を継承
+class InquiryController extends Controller
 {
     /**
      * @Route("/", methods={"POST"}) #HTTPリクエストのメソッドをPOST送信に限定。参考書の書き方間違っている。
      */
-    public function indexPostAction(Request $request) #引数の型（Requestクラス）宣言を行い、$requestを受け取る
+    #引数の型（Requestクラス）宣言を行い、$requestを受け取る
+    public function indexPostAction(Request $request)
     {
-        $form = $this->createInquiryForm(); #createInquiryForm()の返り値を$formに格納
-        $form->handleRequest($request); #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
-        if($form->isValid()){ #もし入力値が正しかった場合、データベースへ情報を反映し、通知メールを送り、完了ページへリダイレクトする。
-            
-            $inquiry = $form->getData(); #フォームオブジェクトの入力データ全体を連想配列として取り出し、$inquiryに格納
+        #createInquiryForm()の返り値を$formに格納
+        $form = $this->createInquiryForm();
 
-            $em = $this->getDoctrine()->getManager(); #エンティティマネージャを取得
-            $em->persist($inquiry); #InquiryエンティティのインスタンスをDoctrineの管理下へ
-            $em->flush(); #変更をデータベースへ反映
+        #formオブジェクトから呼び出す。クライアントから送信された情報をフォームオブジェクトに取り込む
+        $form->handleRequest($request);
 
-            $message = \Swift_Message::newInstance() #新しいインスタンスを作成。インスタンスに引数を指定した場合、コンストラクタに渡す。
-                ->setSubject('Webサイトからのお問い合わせ') #件名を設定
+        #もし入力値が正しかった場合、データベースへ情報を反映し、通知メールを送り、完了ページへリダイレクトする。
+        if($form->isValid()){
+
+            #フォームオブジェクトの入力データ全体を連想配列として取り出し、$inquiryに格納
+            $inquiry = $form->getData();
+
+            #エンティティマネージャを取得
+            $em = $this->getDoctrine()->getManager();
+
+            #InquiryエンティティのインスタンスをDoctrineの管理下へ
+            $em->persist($inquiry);
+
+            #変更をデータベースへ反映
+            $em->flush();
+
+            #新しいインスタンスを作成。インスタンスに引数を指定した場合、コンストラクタに渡す。
+            $message = \Swift_Message::newInstance()
+
+                #件名を設定
+                ->setSubject('Webサイトからのお問い合わせ')
                 ->setFrom('webmaster@example.com')
                 ->setTo('admin@example.com')
-                ->setBody($this->renderView('mail/inquiry.txt.twig', ['data' => $inquiry])); #本文で、twigをレンダリング
+
+                #本文で、twigをレンダリング
                 #テンプレートから本文を作成
                 #$dataをキーに、$inquiryをバリューとする。
-            
-            $this->get('mailer')->send($message); #メール送信メソッドの引数として
+                ->setBody($this->renderView('mail/inquiry.txt.twig', ['data' => $inquiry]));
 
-            return $this->redirect($this->generateUrl('app_inquiry_complete')); #何らかの処理を行った後、指定の『ルート名』にリダイレクト（php bin/console debug:routerで確認）
-        } 
-        
-        return $this->render('Inquiry/index.html.twig', ['form' => $form->createView()]);
+            #メール送信メソッドの引数として
+            $this->get('mailer')->send($message);
+
+            #何らかの処理を行った後、指定の『ルート名』にリダイレクト（php bin/console debug:routerで確認）
+            return $this->redirect($this->generateUrl('app_inquiry_complete'));
+        }
+
         #同じclass内のメンバ変数を使うために疑似変数を使用。#入力エラーの場合は同じフォームを出力
         #createView()で、$formのクラスをインスタンス化
+        return $this->render('Inquiry/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -68,16 +89,21 @@ class InquiryController extends Controller #Symfony/.../Controllerのメンバ�
     }
 
 
-
-    private function createInquiryForm() #フォームを定義する関数を作成
+    #フォームを定義する関数を作成
+    private function createInquiryForm()
     {
-        return $this->createFormBuilder(new Inquiry()) #同じclass内のメンバ変数を使うために疑似変数を使用。#フォームのデータをEntityのインスタンスに格納。
-            ->add('name', TextType::class) #add()でフィールドを設定。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
+        #同じclass内のメンバ変数を使うために疑似変数を使用。#フォームのデータをEntityのインスタンスに格納。
+        return $this->createFormBuilder(new Inquiry())
+
+            #add()でフィールドを設定。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
+            ->add('name', TextType::class)
             ->add('email', EmailType::class) 
             ->add('tel', TelType::class, ['required' => false])
             ->add('type', ChoiceType::class,['choices' => ['公演について' => '公演について', 'その他' => 'その他'], 'expanded' => true]) #キーのテキスト名がウェブページに表記される。
             ->add('content', TextareaType::class)
-            ->add('submit', SubmitType::class,['label' => '送信']) #送信ボタンをフォームの要素として設定
+
+            #送信ボタンをフォームの要素として設定
+            ->add('submit', SubmitType::class,['label' => '送信'])
             ->getForm(); #最後に、formオブジェクトにして返す
     }
 
@@ -87,8 +113,9 @@ class InquiryController extends Controller #Symfony/.../Controllerのメンバ�
     # このfunctionは、参考書通りだと一番上に配置するのだが、そうすると何故かリダイレクトが実行されなくなってしまう。
     public function indexAction()
     {
-        return $this->render('Inquiry/index.html.twig',  ['form' => $this->createInquiryForm()->createView()]);
         #同じclass内のメンバ変数を使うために疑似変数を使用。
         #シングルアロー（$formオブジェクトのcreateView()メソッドにアクセス）。ダブルアロー（配列のキーとバリューの関係を作る）
+        return $this->render('Inquiry/index.html.twig',  ['form' => $this->createInquiryForm()->createView()]);
+
     }
 }

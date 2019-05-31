@@ -8,7 +8,8 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = [ #必ず経由するKernelの中で、常に読み込むバンドルを設定
+        #必ず経由するKernelの中で、常に読み込むバンドルを設定
+        $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -21,7 +22,8 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
         ];
 
-        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) { #dev環境、またはtest環境でのみ読み込むバンドル
+        #dev環境、またはtest環境でのみ読み込むバンドル
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();

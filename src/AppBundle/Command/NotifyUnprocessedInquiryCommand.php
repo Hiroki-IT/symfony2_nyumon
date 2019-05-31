@@ -1,6 +1,6 @@
 <?php
 
-//未処理お問い合わせ通知コマンドのクラスを作成
+#未処理お問い合わせ通知コマンドのクラスを作成
 
 namespace AppBundle\Command;
 
@@ -18,8 +18,11 @@ class NotifyUnprocessedInquiryCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('cs:inquiry:notify-unprocessed')#コマンドの名前を設定
-            ->setDescription('未処理お問い合わせ一覧を通知'); #コマンドの説明を設定
+            #コマンドの名前を設定
+            ->setName('cs:inquiry:notify-unprocessed')
+
+            #コマンドの説明を設定
+            ->setDescription('未処理お問い合わせ一覧を通知');
     }
 
     #コマンドの実際の処理を設定
@@ -27,24 +30,38 @@ class NotifyUnprocessedInquiryCommand extends ContainerAwareCommand
     {
         $container = $this->getContainer();
 
-        $em = $container->get('doctrine')->getManager(); #エンティティマネージャを取得
-        $inquiryRepository = $em->getRepository('AppBundle:Inquiry'); #引数でエンティティを指定
+        #エンティティマネージャを取得
+        $em = $container->get('doctrine')->getManager();
 
-        $inquiryList = $inquiryRepository->findUnprocessed(); #エンティティから未処理お問い合わせ一覧をfindUnprocessed()で取得
+        #引数でエンティティを指定
+        $inquiryRepository = $em->getRepository('AppBundle:Inquiry');
 
-        if (count($inquiryList) > 0) { #未処理お問い合わせ一覧が一つ以上あれば…
+        #エンティティから未処理お問い合わせ一覧をfindUnprocessed()で取得
+        $inquiryList = $inquiryRepository->findUnprocessed();
+
+        #未処理お問い合わせ一覧が一つ以上あれば…
+        if (count($inquiryList) > 0) {
             $templating = $container->get('templating');
 
-            $message = \Swift_Message::newInstance()#新しいインスタンスを作成。インスタンスに引数を指定した場合、コンストラクタに渡す。
-            ->setSubject('[CS] 未処理お問い合わせ通知')#件名を設定
-            ->setFrom('webmaster@example.com')#送信元を設定
-            ->setBody($templating->render('mail/admin_unprocessedInquiryList.txt.twig', ['inquiryList' => $inquiryList])); #部分的にレンダリング
+            #新しいインスタンスを作成。インスタンスに引数を指定した場合、コンストラクタに渡す。
+            $message = \Swift_Message::newInstance()
 
-            $container->get('mailer')->send($message); #メール送信メソッドの引数として
+            #件名を設定
+            ->setSubject('[CS] 未処理お問い合わせ通知')
+
+            #送信元を設定
+            ->setFrom('webmaster@example.com')
+
+            #部分的にレンダリング
+            ->setBody($templating->render('mail/admin_unprocessedInquiryList.txt.twig', ['inquiryList' => $inquiryList]));
+
+            #メール送信メソッドの引数として
+            $container->get('mailer')->send($message);
 
             $output->writeln(count($inquiryList) . "件の未処理お問い合わせがあります");
 
-            if ($this->confirmSend($input, $output)){ #メール送信の確認処理を実行
+            #メール送信の確認処理を実行
+            if ($this->confirmSend($input, $output)){
                 $this->sendMail($inquiryList, $output);
             }
         } else {
@@ -54,27 +71,37 @@ class NotifyUnprocessedInquiryCommand extends ContainerAwareCommand
 
     private function confirmSend($input, $output)
     {
-        $qHelper = $this->getHelper('question'); #Questionヘルパーを取得
+        #Questionヘルパーを取得
+        $qHelper = $this->getHelper('question');
 
-        $question = new Question('通知メールを送信しますか？[y/n]:', null); #質問文を設定
+        #質問文を設定
+        $question = new Question('通知メールを送信しますか？[y/n]:', null);
 
-        $question->setValidator(function ($answer) { #回答のバリデーションを準備
+        #回答のバリデーションを準備
+        $question->setValidator(function ($answer) {
             $answer = strtolower(substr($answer, 0, 1));
-            if(!in_array($answer, ['y', 'n'])) { #'y'あるいは'n'以外の文字の場合、例外をスロー
+
+            #'y'あるいは'n'以外の文字の場合、例外をスロー
+            if(!in_array($answer, ['y', 'n'])) {
                 throw new \RuntimeException(
                     'yまたはnを入力してください'
                 );
             }
             return $answer;
         });
-        $question->setMaxAttempts(3); #許容する試行回数の設定
 
-        return $qHelper->ask($input, $output, $question) == 'y'; #プロンプトを表示して回答を取得
+        #許容する試行回数の設定
+        $question->setMaxAttempts(3);
+
+        #プロンプトを表示して回答を取得
+        return $qHelper->ask($input, $output, $question) == 'y';
     }
 
     private function sendMail($inquiryList, $output)
     {
         $container = $this->getContainer();
-        $templating = $container->get('templating'); #メール送信のコード
+
+        #メール送信のコード
+        $templating = $container->get('templating');
     }
 }

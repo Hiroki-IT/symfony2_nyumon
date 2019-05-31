@@ -1,9 +1,13 @@
 <?php
 
-namespace AppBundle\Entity; #データベースからレコードを取り出すと、本ファイルのエンティティのインスタンスとして取り出される
+#データベースからレコードを取り出すと、本ファイルのエンティティのインスタンスとして取り出される
+namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM; #DocrtrineのMappingフォルダの使用を宣言
-use Symfony\Component\Validator\Constraints As Assert; #Constraintsフォルダの使用を宣言
+#DocrtrineのMappingフォルダの使用を宣言
+use Doctrine\ORM\Mapping as ORM;
+
+#Constraintsフォルダの使用を宣言
+use Symfony\Component\Validator\Constraints As Assert;
 
 #Doctrineによるマッピングは、本来『@Table()』である。
 #しかし、SymfonyによるValidationのアノテーション（@NotBlank()）と区別するために、『as』で名前を付けている。
@@ -23,7 +27,8 @@ class Inquiry
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id; # エンティティのID列を$idとする。
+    #エンティティのID列を$idとする。
+    private $id;
 
     /**
      * @var string
@@ -81,7 +86,9 @@ class Inquiry
      * @var string
      * 
      * @ORM\Column(name="process_memo", type="text")
-     * @Assert\NotBlank(groups={"admin"}) #バリデーショングループadminを指定
+     *
+     * #バリデーショングループadminを指定
+     * @Assert\NotBlank(groups={"admin"})
      */
     private $processMemo;
 
@@ -98,7 +105,8 @@ class Inquiry
      */
     public function getId()
     {
-        return $this->id; #プロパティの$idを返す
+        #プロパティの$idを返す
+        return $this->id;
     }
 
     /**
@@ -108,7 +116,8 @@ class Inquiry
      *
      * @return Inquiry
      */
-    public function setName($name) #引数をname変数としてエンティティに渡す
+    #引数をname変数としてエンティティに渡す
+    public function setName($name)
     {
         $this->name = $name;
 

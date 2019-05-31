@@ -1,6 +1,7 @@
 <?php
 
-namespace AppBundle\Controller; #本ファイルのパスを名前として定義
+#本ファイルのパスを名前として定義
+namespace AppBundle\Controller;
 
 use AppBundle\Entity\Inquiry;
 use League\Csv\Writer;
@@ -23,54 +24,80 @@ class AdminInquiryListController extends Controller #Symfony/.../Controllerの�
      * #（２）フォーマットのデフォルト値をhtmlに設定
      * #（３）パラメータの条件として、htmlあるいはcsvを設定
      */
-    public function indexAction(Request $request, $_format) #引数の型（Requestクラス）宣言を行い、$requestと$_formatを受け取る
-    { #indexAction()：indexを返り値とするアクション
-        $form = $this->createSearchForm(); #createSearchForm()の返り値を$formに格納
-        $form->handleRequest($request); #送信されたHTTPリクエストをフォームオブジェクトに取り込む
+    #引数の型（Requestクラス）宣言を行い、$requestと$_formatを受け取る
+    #indexAction()：indexを返り値とするアクション
+    public function indexAction(Request $request, $_format)
+    {
+        #createSearchForm()の返り値を$formに格納
+        $form = $this->createSearchForm();
+
+        #送信されたHTTPリクエストをフォームオブジェクトに取り込む
+        $form->handleRequest($request);
         $keyword = null;
         if($form->isValid()){
-            $keyword = $form->get('search')->getData(); #キーワード検索フォームにアクセスし、searchデータを連想配列として取り出し、$keywordに格納
+
+            #キーワード検索フォームにアクセスし、searchデータを連想配列として取り出し、$keywordに格納
+            $keyword = $form->get('search')->getData();
         }
 
-        $em = $this->getDoctrine()->getManager(); #getManagerにアクセスして発動。Doctrineオブジェクトを取得し、エンティティマネージャを取得
-        $inquiryRepository = $em->getRepository('AppBundle:Inquiry'); #引数でエンティティを指定
+        #getManagerにアクセスして発動。Doctrineオブジェクトを取得し、エンティティマネージャを取得
+        $em = $this->getDoctrine()->getManager();
 
-        $inquiryList = $inquiryRepository->findAllByKeyword($keyword); #findAllByKeyword()でキーワードに一致するお問い合わせ一覧を取得し、$inquiryListに格納
+        #引数でエンティティを指定
+        $inquiryRepository = $em->getRepository('AppBundle:Inquiry');
 
-        if($_format == 'csv'){ #$_formatがcsvならば発動
-            $response = new Response($this->createCsv($inquiryList)); #$inquiryListから、csv形式のレスポンスを作成
+        #findAllByKeyword()でキーワードに一致するお問い合わせ一覧を取得し、$inquiryListに格納
+        $inquiryList = $inquiryRepository->findAllByKeyword($keyword);
+
+        #$_formatがcsvならば発動
+        if($_format == 'csv'){
+
+            #$inquiryListから、csv形式のレスポンスを作成
+            $response = new Response($this->createCsv($inquiryList));
             $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inquiry_list.csv');
             $response->headers->set('Content-Disposition', $d);
 
             return $response;
         }
 
-        return $this->render('Admin/Inquiry/index.html.twig', ['form' => $form->createView(), 'inquiryList' => $inquiryList]);
         #createView()で、$formのクラスをインスタンス化
+        return $this->render('Admin/Inquiry/index.html.twig', ['form' => $form->createView(), 'inquiryList' => $inquiryList]);
+
     }
 
-    private function createSearchForm() #キーワード検索フォームを作成する
-    { #createXXX()：指定のものを作成する関数
+    #キーワード検索フォームを作成
+    private function createSearchForm()
+    {
+        #createXXX()：指定のものを作成する関数
         return $this->createFormBuilder()
-            ->add('search', SearchType::class) #add()でフィールドを設定。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
+
+            #add()でフィールドを設定。第１引数：フィールドの識別名、第２引数：フィールドのタイプ、第３引数：フィールドのオプションを連想配列で指定
+            ->add('search', SearchType::class)
             ->add('submit', ButtonType::class, ['label' => '検索'])
             ->getForm(); 
     }
 
-    private function createCsv($inquiryList) #csvオブジェクトを作成する
+    #csvオブジェクトを作成
+    private function createCsv($inquiryList)
     {
         /**
          * @var Writer $writer #引数の型（Writerクラス）宣言を行い、$writerを受け取る
          */
-        $writer = Writer::createFromString(","); #スコープ定義演算子（クラスのプロパティやメソッドにアクセスするためには一度newインスタンスすることが必要だが、それを省略できる）
+
+        #スコープ定義演算子（クラスのプロパティやメソッドにアクセスするためには一度newインスタンスすることが必要だが、それを省略できる）
+        $writer = Writer::createFromString(",");
         $writer->setNewline("\r\n");
 
         foreach($inquiryList as $inquiry){
             /**
              * @var Inquiry $inquiry #引数の型（Inquiryクラス）宣言を行い、$inquiryを受け取る
              */
-            $writer->insertOne([ $inquiry->getId(), $inquiry->getName(), $inquiry->getEmail()]); #getId()：$inquiry内の$idプロパティ（＝idエンティティ）を返す。
+
+            #getId()：$inquiry内の$idプロパティ（＝idエンティティ）を返す。
+            $writer->insertOne([ $inquiry->getId(), $inquiry->getName(), $inquiry->getEmail()]);
         }
-        return (string)$writer; #csvオブジェクトを文字列化し、文字列として取り出して返す
+
+        #csvオブジェクトを文字列化し、文字列として取り出して返す
+        return (string)$writer;
     }
 }
