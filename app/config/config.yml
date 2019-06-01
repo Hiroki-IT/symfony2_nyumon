@@ -74,3 +74,9 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
+
+
+# getConcertsAction()からreturnされたViewオブジェクトに対して、自動でhandleViewメソッドを実行できるように設定
+fos_rest:
+    view:
+        view_response_listener: force
