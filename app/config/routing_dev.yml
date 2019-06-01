@@ -1,3 +1,5 @@
+#_dev：開発環境のみで利用
+
 _wdt:
     resource: '@WebProfilerBundle/Resources/config/routing/wdt.xml'
     prefix: /_wdt
@@ -12,3 +14,8 @@ _errors:
 
 _main:
     resource: routing.yml
+
+#APIドキュメントを閲覧するためのルーティングを設定
+NelmioApiDocBundle:
+    resource: '@NelmioApiDocBundle/Resources/config/routing.yml'
+    prefix: /api/doc

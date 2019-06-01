@@ -1,3 +1,5 @@
+#_dev：開発環境のみで利用
+
 imports:
     - { resource: config.yml }
 
@@ -40,3 +42,6 @@ monolog:
 
 swiftmailer:
     delivery_addresses: ['hasegawafeedshop@gmail.com']
+
+#開発用のAPIドキュメントの設定をデフォルトに指定
+nelmio_api_doc: null
