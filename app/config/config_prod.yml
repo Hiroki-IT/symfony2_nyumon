@@ -1,3 +1,5 @@
+#_prod：本番環境のみで利用
+
 imports:
     - { resource: config.yml }
 
