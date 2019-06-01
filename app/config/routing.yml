@@ -1,3 +1,16 @@
 app:
+    #ルーティングするコントローラを指定
     resource: '@AppBundle/Controller/'
+
+    #ルーティング方法にアノテーションを指定
     type: annotation
+
+
+app_rest_concert:
+
+    #ルーティングするコントローラを指定
+    resource: '@AppBundle/Controller/Api/ConcertController.php'
+    type: rest
+
+    #リクエストするURLの接頭辞を指定
+    prefix: /api
